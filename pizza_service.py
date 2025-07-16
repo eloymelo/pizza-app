@@ -1,6 +1,5 @@
 AVAILABLE_TOPPINGS = ['pepperoni', 'mushrooms', 'extra cheese']
 
-# Dictionary for the key and value
 TOPPING_PRICES = {
     'pepperoni': 2.00,
     'mushrooms': 1.50,
@@ -9,7 +8,6 @@ TOPPING_PRICES = {
 
 def display_menu():
 
-    # A simple welcome message for this pizza app
     print("Welcome to Python Pizza!")
     print("\nHere is our menu:")
 
@@ -21,11 +19,7 @@ def main():
     display_menu()
     ordered_toppings, final_price = take_order()
 
-    print("\nYour final pizza will have: ")
-    for topping in ordered_toppings:
-        print(f"- {topping}")
-
-    print(f"The total price is ${final_price}")
+    display_summary(ordered_toppings, final_price)
 
 def take_order():
 
@@ -52,6 +46,14 @@ def take_order():
             print("Sorry, we don't have that topping.")
 
     return customer_toppings, total_price
+
+def display_summary(toppings, price):
+    
+    print("\nYour final pizza will have: ")
+    for topping in toppings:
+        print(f"- {topping}")
+
+    print(f"The total price is ${price:.2f}")
 
 if __name__ == "__main__":
     main()
