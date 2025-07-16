@@ -1,44 +1,57 @@
-# A simple welcome message for this pizza app
-
-print("Welcome to Python Pizza!")
-
-available_toppings = ['pepperoni', 'mushrooms', 'extra cheese']
-
-for topping in available_toppings:
-    print(topping)
-
-customer_toppings = []
-
-prompt = "\nPlease enter a topping to add:"
-prompt += "\n(Enter 'quit' when you are finished) "
-
-total_price = 10
+AVAILABLE_TOPPINGS = ['pepperoni', 'mushrooms', 'extra cheese']
 
 # Dictionary for the key and value
-
-topping_price = {
+TOPPING_PRICES = {
     'pepperoni': 2.00,
     'mushrooms': 1.50,
     'extra cheese': 1.00
-}
+}    
 
-while True:
+def display_menu():
 
-    chose_topping = input(prompt)
+    # A simple welcome message for this pizza app
+    print("Welcome to Python Pizza!")
+    print("\nHere is our menu:")
 
-    if chose_topping in available_toppings:
-        print(f"Adding {chose_topping} to your pizza!")
-        customer_toppings.append(chose_topping)
-        total_price += topping_price[chose_topping]
+    for topping in AVAILABLE_TOPPINGS:
+        print(topping)
 
-    elif chose_topping == 'quit':
-        break
+def main():
+    
+    display_menu()
+    ordered_toppings, final_price = take_order()
 
-    else:
-        print("Sorry, we don't have that topping.")
+    print("\nYour final pizza will have: ")
+    for topping in ordered_toppings:
+        print(f"- {topping}")
 
-print("\nYour final pizza will have: ")
-for topping in customer_toppings:
-    print(f"- {topping}")
+    print(f"The total price is ${final_price}")
 
-print(f"The total price is ${total_price:.2f}")
+def take_order():
+
+    customer_toppings = []
+
+    prompt = "\nPlease enter a topping to add:"
+    prompt += "\n(Enter 'quit' when you are finished) "
+
+    total_price = 10
+
+    while True:
+
+        chose_topping = input(prompt)
+
+        if chose_topping in AVAILABLE_TOPPINGS:
+            print(f"Adding {chose_topping} to your pizza!")
+            customer_toppings.append(chose_topping)
+            total_price += TOPPING_PRICES[chose_topping]
+
+        elif chose_topping == 'quit':
+            break
+
+        else:
+            print("Sorry, we don't have that topping.")
+
+    return customer_toppings, total_price
+
+if __name__ == "__main__":
+    main()
