@@ -1,3 +1,5 @@
+import json
+
 AVAILABLE_TOPPINGS = ['pepperoni', 'mushrooms', 'extra cheese']
 
 TOPPING_PRICES = {
@@ -14,6 +16,14 @@ class Pizza():
         self.toppings = []
         self.price = BASE_PRICE
 
+    def to_dict(self):
+        order_dict = {
+            'toppings': self.toppings,
+            'price': self.price
+        }
+
+        return order_dict
+
 def display_menu():
 
     print("Welcome to Python Pizza!")
@@ -23,10 +33,36 @@ def display_menu():
         print(topping)
 
 def main():
+
+    filename = 'pizza_order.json'
+
+    try:
+        with open(filename) as f:
+            last_order = json.load(f)
+
+    except FileNotFoundError:
+        pass
+    else:
+        print("--- Welcome back! Here was your last order: ---")
+        toppings = last_order['toppings']
+        print("Toppings:")
+        for topping in toppings:
+            print(f"- {topping}")
+
+        price = last_order['price']
+        print(f"The total price was: ${price:.2f}")
     
     display_menu()
     the_finished_order = take_order()
     display_summary(the_finished_order)
+
+    with open(filename, 'w') as f:
+        order_details = the_finished_order.to_dict()
+
+        json.dump(order_details, f)
+
+    print("\nYour order has been saved!")
+
 
 def take_order():
 
