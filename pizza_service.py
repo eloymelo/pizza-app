@@ -6,6 +6,14 @@ TOPPING_PRICES = {
     'extra cheese': 1.00
 }    
 
+BASE_PRICE = 10.00
+
+class Pizza():
+
+    def __init__(self):
+        self.toppings = []
+        self.price = BASE_PRICE
+
 def display_menu():
 
     print("Welcome to Python Pizza!")
@@ -17,18 +25,15 @@ def display_menu():
 def main():
     
     display_menu()
-    ordered_toppings, final_price = take_order()
-
-    display_summary(ordered_toppings, final_price)
+    the_finished_order = take_order()
+    display_summary(the_finished_order)
 
 def take_order():
 
-    customer_toppings = []
+    current_order = Pizza()
 
     prompt = "\nPlease enter a topping to add:"
     prompt += "\n(Enter 'quit' when you are finished) "
-
-    total_price = 10
 
     while True:
 
@@ -36,8 +41,8 @@ def take_order():
 
         if chose_topping in AVAILABLE_TOPPINGS:
             print(f"Adding {chose_topping} to your pizza!")
-            customer_toppings.append(chose_topping)
-            total_price += TOPPING_PRICES[chose_topping]
+            current_order.toppings.append(chose_topping)
+            current_order.price += TOPPING_PRICES[chose_topping]
 
         elif chose_topping == 'quit':
             break
@@ -45,15 +50,15 @@ def take_order():
         else:
             print("Sorry, we don't have that topping.")
 
-    return customer_toppings, total_price
+    return current_order
 
-def display_summary(toppings, price):
+def display_summary(pizza_order):
     
-    print("\nYour final pizza will have: ")
-    for topping in toppings:
+    print("\nYour final pizza will have:")
+    for topping in pizza_order.toppings:
         print(f"- {topping}")
 
-    print(f"The total price is ${price:.2f}")
+    print(f"The total price is ${pizza_order.price:.2f}")
 
 if __name__ == "__main__":
     main()
